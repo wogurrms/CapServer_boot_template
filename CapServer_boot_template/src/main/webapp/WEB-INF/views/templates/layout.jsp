@@ -64,6 +64,7 @@
 			<a href="<c:url value="/chartFromRecord"/>">Chart</a>
 			<a href="<c:url value="/mynicotine"/>">My nicotine</a>
 			<a href="<c:url value="/fagerstrom"/>">FagerStrom Test</a>
+			<a href="<c:url value="/spend"/>">Spend</a>
 			<a href="<c:url value="/insertUser"/>">InsertUser</a>
 			<a href="<c:url value="/insertRecord"/>">InsertRec</a>
 			<a href="<c:url value="/insertYesterDayRecord"/>">InsertYesRec</a>

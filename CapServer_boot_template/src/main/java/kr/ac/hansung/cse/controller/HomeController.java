@@ -28,4 +28,10 @@ public class HomeController {
 	public String fagerStromResult() {
 		return "fagerstromresult";
 	}
+
+	@RequestMapping(value = "/spend", method = RequestMethod.GET)
+	public String spend() {
+		return "spend";
+	}
+	
 }

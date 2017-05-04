@@ -97,4 +97,10 @@
     <put-attribute name="title" value="My Ranking in All Users" />
     <put-attribute name="body" value="/WEB-INF/views/ranking.jsp" />
   </definition>
+     <!-- 소모금액 -->
+  <definition name="spend" extends="base">
+    <put-attribute name="header" value="/WEB-INF/views/templates/spendheader.jsp"  />
+    <put-attribute name="title" value="My Ranking in All Users" />
+    <put-attribute name="body" value="/WEB-INF/views/spend.jsp" />
+  </definition>
 </tiles-definitions>
