@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  <definition name="base" template="/WEB-INF/views/templates/layout.jsp">
+    <put-attribute name="title" value="My eStore" />
+    <put-attribute name="header" value="/WEB-INF/views/templates/header.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/templates/footer.jsp" />
+  </definition>
+  
+  <!-- 상속받아서 사용함 -->
+  <definition name="home" extends="base">
+    <put-attribute name="title" value="My eStore's Homepage" />
+    <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+  </definition>
+  
+  <!-- 상속받아서 사용함 -->
+  <definition name="products" extends="base">
+    <put-attribute name="title" value="My eStore's Products" />
+    <put-attribute name="body" value="/WEB-INF/views/products.jsp" />
+  </definition>
+  
+  <!-- 상속받아서 사용함 -->
+  <definition name="admin" extends="base">
+    <put-attribute name="title" value="Administrator Page" />
+    <put-attribute name="body" value="/WEB-INF/views/admin.jsp" />
+  </definition>
+  
+  <!-- 상속받아서 사용함 -->
+  <definition name="productInventory" extends="base">
+    <put-attribute name="title" value="product Inventory Page" />
+    <put-attribute name="body" value="/WEB-INF/views/productInventory.jsp" />
+  </definition>
+  
+  <!-- 상속받아서 사용함 -->
+  <definition name="addProduct" extends="base">
+    <put-attribute name="title" value="Add Product Page" />
+    <put-attribute name="body" value="/WEB-INF/views/addProduct.jsp" />
+  </definition>
+  
+   <!-- 상속받아서 사용함 -->
+  <definition name="editProduct" extends="base">
+    <put-attribute name="title" value="Edit Product Page" />
+    <put-attribute name="body" value="/WEB-INF/views/editProduct.jsp" />
+  </definition>
+  
+   <!-- 상속받아서 사용함 -->
+  <definition name="login" extends="base">
+    <put-attribute name="title" value="Login Page" />
+    <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+  </definition>
+  
+   <!-- 상속받아서 사용함 -->
+  <definition name="productdetail" extends="base">
+    <put-attribute name="title" value="Product Detail" />
+    <put-attribute name="body" value="/WEB-INF/views/productdetail.jsp" />
+  </definition>
+   <!-- 상속받아서 사용함 -->
+  <definition name="productdetail" extends="base">
+    <put-attribute name="title" value="Product Detail" />
+    <put-attribute name="body" value="/WEB-INF/views/productdetail.jsp" />
+  </definition>
+  
+   <!-- 유저 테이블  -->
+  <definition name="users" extends="base">
+    <put-attribute name="title" value="Users Table" />
+    <put-attribute name="body" value="/WEB-INF/views/users.jsp" />
+  </definition>
+   <!-- 오늘 핀 담배 갯수 -->
+  <definition name="todayamount" extends="base">
+    <put-attribute name="title" value="My Today Smoking Count" />
+    <put-attribute name="body" value="/WEB-INF/views/todayamount.jsp" />
+  </definition>
+   <!-- 시간대 별 차트  -->
+  <definition name="chart" extends="base">
+    <put-attribute name="header" value="/WEB-INF/views/templates/chartheader.jsp"  />
+    <put-attribute name="title" value="My Smoking Chart" />
+    <put-attribute name="body" value="/WEB-INF/views/chart.jsp" />
+  </definition>
+   <!-- 체내 니코틴 양  -->
+  <definition name="mynicotine" extends="base">
+    <put-attribute name="header" value="/WEB-INF/views/templates/nicotineheader.jsp"  />
+    <put-attribute name="title" value="My Current Nicotine" />
+    <put-attribute name="body" value="/WEB-INF/views/mynicotine.jsp" />
+  </definition>
+   <!-- 파거스트롬 테스트  -->
+  <definition name="fagerstrom" extends="base">
+    <put-attribute name="header" value="/WEB-INF/views/templates/testheader.jsp"  />
+    <put-attribute name="title" value="My Fagerstrom Test" />
+    <put-attribute name="body" value="/WEB-INF/views/fagerstrom.jsp" />
+  </definition>
+   <!-- 랭킹 -->
+  <definition name="ranking" extends="base">
+    <put-attribute name="header" value="/WEB-INF/views/templates/rankheader.jsp"  />
+    <put-attribute name="title" value="My Ranking in All Users" />
+    <put-attribute name="body" value="/WEB-INF/views/ranking.jsp" />
+  </definition>
+</tiles-definitions>
