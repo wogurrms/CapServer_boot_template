@@ -1,5 +1,6 @@
 package kr.ac.hansung.cse.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,13 @@ public class RecordService {
 		return recordDao.getChartResponseData();
 	}
 
+	public List<ChartResponseData> getDailyChartResponseData(String date) throws ParseException {
+		return recordDao.getDailyChartResponseData(date);
+	}
+	
 	public NicotineResponseData getLatestNicotine() {
 		return recordDao.getLatestNicotine();
 	}
+
 
 }

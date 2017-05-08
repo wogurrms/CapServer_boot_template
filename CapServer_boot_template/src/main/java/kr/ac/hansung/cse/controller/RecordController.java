@@ -38,43 +38,4 @@ public class RecordController {
 		return "recorddetail";
 	}
 	
-	@RequestMapping("/todayamount")
-	public String getTodayAmount(Model model){
-	
-		int todayAmount = recordService.getTodayAmount();
-		float myAvg = recordService.getAvgAmount();
-		ResponseData responseData = new ResponseData();
-		responseData.setTodayAmount(todayAmount);
-		responseData.setAvg(myAvg);
-		model.addAttribute("responseData",responseData);
-		return "todayamount";
-	}
-	
-
-	@RequestMapping("/chartFromRecord")
-	public String chartFromRecord(Model model){
-		List<ChartResponseData> chartResponseData = recordService.getChartResponseData();
-		model.addAttribute("results",chartResponseData);
-		return "chart";
-	}
-
-	@RequestMapping(value = "/mynicotine", method = RequestMethod.GET)
-	public String myNicotine(Model model) throws ParseException {
-
-		Date currentDate = new Date();
-		SimpleDateFormat  formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String now = formatter.format(currentDate);
-		
-		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine();
-		double elapsedTime =(double)(formatter.parse(now).getTime() - nicotineResponseData.getDate().getTime())/1000.0;
-		
-		double currentNico = nicotineResponseData.getNicotine() * Math.pow(0.5, elapsedTime/7200.0);
-		
-		
-		double formattedNico = Double.parseDouble(String.format("%.2f",currentNico));
-		
-		
-		model.addAttribute("mynicotine",formattedNico);
-		return "mynicotine";
-	}
 }

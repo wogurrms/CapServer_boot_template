@@ -14,24 +14,6 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
-	@RequestMapping(value = "/fagerstrom", method = RequestMethod.GET)
-	public String fagerstrom() {
-		return "fagerstrom";
-	}
 
-	@RequestMapping(value = "/ranking", method = RequestMethod.GET)
-	public String ranking() {
-		return "ranking";
-	}
-
-	@RequestMapping(value = "/fagerstromresult", method = RequestMethod.GET)
-	public String fagerStromResult() {
-		return "fagerstromresult";
-	}
-
-	@RequestMapping(value = "/spend", method = RequestMethod.GET)
-	public String spend() {
-		return "spend";
-	}
 	
 }

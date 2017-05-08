@@ -66,6 +66,8 @@ public class RestAPIController {
 				// to do Exception , User가 이미 존재할 경우 오류
 			}
 			user.setTobac(tobaccoService.getTobaccoById(1));
+			user.setEnabled(1);
+			user.setAuthority("ROLE_USER");
 			userService.addUser(user);
 			
 			// header 에 사용자의 uri 를 넘겨줌

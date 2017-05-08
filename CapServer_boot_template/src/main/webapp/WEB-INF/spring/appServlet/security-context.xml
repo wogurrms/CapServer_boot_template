@@ -13,18 +13,21 @@
 		<security:authentication-provider>
 			<security:jdbc-user-service
 				data-source-ref="dataSource"
-				users-by-username-query="select username, password, enabled from users where username=?"
-				authorities-by-username-query="select username, authority from authorities where username=?" />
+				users-by-username-query="select nick as username, password as password, enabled as enabled from user where nick=?"
+				authorities-by-username-query="select nick as username, authority as authority from user where nick=?" />
 		</security:authentication-provider>
 	</security:authentication-manager>
 
 
+
+
+	<security:http pattern="/api/**" security="none"/>
+	
 	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/admin/**"
-			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/userpage/**"
+			access="hasRole('ROLE_USER')" />
 		<security:form-login login-page="/login"
 			authentication-failure-url="/login?error" />
 	</security:http>
-
 
 </beans>

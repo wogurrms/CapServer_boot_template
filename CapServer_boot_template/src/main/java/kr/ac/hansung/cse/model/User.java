@@ -28,6 +28,8 @@ public class User {
 	private int uid;
 	private String nick;
 	private String password;
+	private int enabled;
+	private String authority;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="tobac_id")

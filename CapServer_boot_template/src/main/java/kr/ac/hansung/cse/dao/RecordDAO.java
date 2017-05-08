@@ -1,6 +1,9 @@
 package kr.ac.hansung.cse.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -89,6 +92,27 @@ public class RecordDAO {
 		Query query = session.createQuery(hqlQuery);
 
 		List<ChartResponseData> results = query.list();
+		return results;
+	}
+
+	public List<ChartResponseData> getDailyChartResponseData(String date) throws ParseException {
+		Session session = sessionFactory.getCurrentSession();
+		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*) , cast(r.date as time) ) "
+				+ "from Record r where year(r.date) = :year and month(r.date) = :month and day(r.date) = :day "
+				+ "group by hour(r.date)";
+		
+		String[] splitted = date.split("-");
+		int year = Integer.parseInt(splitted[0]);
+		int month = Integer.parseInt(splitted[1]);
+		int day = Integer.parseInt(splitted[2]);
+		
+		Query query = session.createQuery(hqlQuery);
+		query.setParameter("year", year);
+		query.setParameter("month", month);
+		query.setParameter("day", day);
+		
+		List<ChartResponseData> results = query.list();
+		System.out.println(results.size()+"개의 데이터 검색");
 		return results;
 	}
 

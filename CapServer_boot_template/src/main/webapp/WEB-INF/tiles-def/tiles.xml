@@ -90,6 +90,12 @@
     <put-attribute name="header" value="/WEB-INF/views/templates/testheader.jsp"  />
     <put-attribute name="title" value="My Fagerstrom Test" />
     <put-attribute name="body" value="/WEB-INF/views/fagerstrom.jsp" />
+  </definition>  
+   <!-- 파거스트롬 테스트 결과 창  -->
+  <definition name="fagerstromresult" extends="base">
+    <put-attribute name="header" value="/WEB-INF/views/templates/testheader.jsp"  />
+    <put-attribute name="title" value="My Fagerstrom Test" />
+    <put-attribute name="body" value="/WEB-INF/views/fagerstromresult.jsp" />
   </definition>
    <!-- 랭킹 -->
   <definition name="ranking" extends="base">
