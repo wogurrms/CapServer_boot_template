@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.hansung.cse.model.NicotineResponseData;
@@ -52,15 +53,17 @@ public class InsertController {
 		return "home";
 	}
 
-	@RequestMapping("/insertRecord")
-	public String insertRecord() throws ParseException {
+	@RequestMapping("/insertRecord/{username}")
+	public String insertRecord(@PathVariable("username") String username) throws ParseException {
 		Date currentDate = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String now = formatter.format(currentDate);
 
 		double formattedNico = 0.0;
+
+		User user = userService.getUserByNick(username);	
 		
-		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine();
+		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine(user.getUid());
 		if (nicotineResponseData != null) {
 			double elapsedTime = (double) (formatter.parse(now).getTime() - nicotineResponseData.getDate().getTime())
 					/ 1000.0;
@@ -68,7 +71,6 @@ public class InsertController {
 			formattedNico = Double.parseDouble(String.format("%.2f", currentNico));
 		}
 
-		User user = userService.getUserByNick("wogur");
 
 		Record record = new Record();
 		record.setUser(user);

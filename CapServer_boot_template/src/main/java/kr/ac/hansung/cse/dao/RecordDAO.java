@@ -1,9 +1,7 @@
 package kr.ac.hansung.cse.dao;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -16,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.ac.hansung.cse.model.ChartResponseData;
 import kr.ac.hansung.cse.model.NicotineResponseData;
 import kr.ac.hansung.cse.model.Record;
+import kr.ac.hansung.cse.model.User;
 
 @Repository
 @Transactional
@@ -57,20 +56,22 @@ public class RecordDAO {
 		session.flush();
 	}
 
-	public int getTodayAmount() {
+	public int getTodayAmount(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select count(*) from Record r where r.date > curdate()");
+		Query query = session.createQuery("select count(*) from Record r where r.date > curdate() and user_id = :uid");
+		query.setParameter("uid", uid);
 		Long todayAmount = (Long)query.uniqueResult();
 		return todayAmount.intValue();
 	}
 
 	
 
-	public float getAvgAmount() {
+	public float getAvgAmount(int uid) {
 		float avg = 0;
 		float sum = 0;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select count(*) from Record r group by cast(r.date as date)");
+		Query query = session.createQuery("select count(*) from Record r where user_id = :uid group by cast(r.date as date)");
+		query.setParameter("uid", uid);
 		ArrayList<Long> responseList = (ArrayList<Long>)query.list();
 
 		
@@ -85,20 +86,21 @@ public class RecordDAO {
 		return avg;
 	}
 
-	public List<ChartResponseData> getChartResponseData() {
+	public List<ChartResponseData> getChartResponseData(int uid) {
 		Session session = sessionFactory.getCurrentSession();
 		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*) , cast(r.date as date) )"
-				+ "from Record r group by cast(r.date as date)";
+				+ "from Record r where user_id = :uid group by cast(r.date as date)";
 		Query query = session.createQuery(hqlQuery);
+		query.setParameter("uid", uid);
 
 		List<ChartResponseData> results = query.list();
 		return results;
 	}
 
-	public List<ChartResponseData> getDailyChartResponseData(String date) throws ParseException {
+	public List<ChartResponseData> getDailyChartResponseData(int uid, String date) throws ParseException {
 		Session session = sessionFactory.getCurrentSession();
 		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*) , cast(r.date as time) ) "
-				+ "from Record r where year(r.date) = :year and month(r.date) = :month and day(r.date) = :day "
+				+ "from Record r where user_id = :uid and year(r.date) = :year and month(r.date) = :month and day(r.date) = :day "
 				+ "group by hour(r.date)";
 		
 		String[] splitted = date.split("-");
@@ -107,6 +109,7 @@ public class RecordDAO {
 		int day = Integer.parseInt(splitted[2]);
 		
 		Query query = session.createQuery(hqlQuery);
+		query.setParameter("uid", uid);
 		query.setParameter("year", year);
 		query.setParameter("month", month);
 		query.setParameter("day", day);
@@ -116,11 +119,12 @@ public class RecordDAO {
 		return results;
 	}
 
-	public NicotineResponseData getLatestNicotine() {
+	public NicotineResponseData getLatestNicotine(int uid) {
 		Session session = sessionFactory.getCurrentSession();
 		String hqlQuery = "select new kr.ac.hansung.cse.model.NicotineResponseData(date, nicotine) "
-				+ "from Record where record_id = (select max(record_id) from Record)";
+				+ "from Record where record_id = (select max(record_id) from Record where user_id = :uid)";
 		Query query = session.createQuery(hqlQuery);
+		query.setParameter("uid", uid);
 		
 		NicotineResponseData result = (NicotineResponseData) query.uniqueResult();
 

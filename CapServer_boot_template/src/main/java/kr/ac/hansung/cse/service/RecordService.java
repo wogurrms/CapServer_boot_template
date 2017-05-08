@@ -10,6 +10,7 @@ import kr.ac.hansung.cse.dao.RecordDAO;
 import kr.ac.hansung.cse.model.ChartResponseData;
 import kr.ac.hansung.cse.model.NicotineResponseData;
 import kr.ac.hansung.cse.model.Record;
+import kr.ac.hansung.cse.model.User;
 
 @Service
 public class RecordService {
@@ -37,24 +38,24 @@ public class RecordService {
 		recordDao.editRecord(record);
 	}
 
-	public int getTodayAmount() {
-		return recordDao.getTodayAmount();
+	public int getTodayAmount(int uid) {
+		return recordDao.getTodayAmount(uid);
 	}
 
-	public float getAvgAmount() {
-		return recordDao.getAvgAmount();
+	public float getAvgAmount(int uid) {
+		return recordDao.getAvgAmount(uid);
 	}
 
-	public List<ChartResponseData> getChartResponseData() {
-		return recordDao.getChartResponseData();
+	public List<ChartResponseData> getChartResponseData(int uid) {
+		return recordDao.getChartResponseData(uid);
 	}
 
-	public List<ChartResponseData> getDailyChartResponseData(String date) throws ParseException {
-		return recordDao.getDailyChartResponseData(date);
+	public List<ChartResponseData> getDailyChartResponseData(int uid, String date) throws ParseException {
+		return recordDao.getDailyChartResponseData(uid, date);
 	}
 	
-	public NicotineResponseData getLatestNicotine() {
-		return recordDao.getLatestNicotine();
+	public NicotineResponseData getLatestNicotine(int uid) {
+		return recordDao.getLatestNicotine(uid);
 	}
 
 

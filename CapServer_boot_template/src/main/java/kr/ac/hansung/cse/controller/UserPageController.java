@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.ac.hansung.cse.model.ChartResponseData;
 import kr.ac.hansung.cse.model.NicotineResponseData;
 import kr.ac.hansung.cse.model.ResponseData;
+import kr.ac.hansung.cse.model.User;
 import kr.ac.hansung.cse.service.RecordService;
 import kr.ac.hansung.cse.service.TobaccoService;
 import kr.ac.hansung.cse.service.UserService;
@@ -47,10 +48,12 @@ public class UserPageController {
 	}
 
 	@RequestMapping(value = "/fagerstromresult/{username}", method = RequestMethod.GET)
-	public String fagerStromResult(@RequestParam("radio-1")int value1, @RequestParam("radio-2")int value2,
+	public String fagerStromResult(@PathVariable("username") String username, @RequestParam("radio-1")int value1, @RequestParam("radio-2")int value2,
 			@RequestParam("radio-3")int value3, @RequestParam("radio-4")int value4, Model model) {
 		
-		int avgAmount = (int)recordService.getAvgAmount();
+		User user = userService.getUserByNick(username);
+		
+		int avgAmount = (int)recordService.getAvgAmount(user.getUid());
 		int value5 = 0;
 		
 		String nicotineDependence ="";
@@ -102,9 +105,10 @@ public class UserPageController {
 
 	@RequestMapping(value= "/todayamount/{username}", method = RequestMethod.GET)
 	public String getTodayAmount(@PathVariable("username") String username, Model model){
-	
-		int todayAmount = recordService.getTodayAmount();
-		float myAvg = recordService.getAvgAmount();
+		User user = userService.getUserByNick(username);
+		
+		int todayAmount = recordService.getTodayAmount(user.getUid());
+		float myAvg = recordService.getAvgAmount(user.getUid());
 		ResponseData responseData = new ResponseData();
 		responseData.setTodayAmount(todayAmount);
 		responseData.setAvg(myAvg);
@@ -114,9 +118,7 @@ public class UserPageController {
 	
 
 	@RequestMapping(value= "/chartFromRecord", method = RequestMethod.GET)
-	public String chartFromRecord(Model model){
-		List<ChartResponseData> chartResponseData = recordService.getChartResponseData();
-		model.addAttribute("results",chartResponseData);
+	public String chartFromRecord(){
 		return "chart";
 	}
 
@@ -124,6 +126,9 @@ public class UserPageController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/chartFromRecordToJsonArray/{username}", method=RequestMethod.GET)
 	public @ResponseBody JSONObject chartFromRecordToRest(@PathVariable("username") String username, Model model){
+		
+		User user = userService.getUserByNick(username);
+		
 		JSONObject data = new JSONObject();
 		JSONObject ajaxObjCols1 = new JSONObject();
 		JSONObject ajaxObjCols2 = new JSONObject();
@@ -147,7 +152,7 @@ public class UserPageController {
 		ajaxArrCols.add(ajaxObjCols1);
 		ajaxArrCols.add(ajaxObjCols2); 
 
-		List<ChartResponseData> chartResponseDataList = recordService.getChartResponseData();
+		List<ChartResponseData> chartResponseDataList = recordService.getChartResponseData(user.getUid());
 		size = chartResponseDataList.size();
 		
 		for(int i = 0; i<size ; i++){
@@ -180,8 +185,9 @@ public class UserPageController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/chartFromRecordToJsonArrayDaily/{username}/{date}", method=RequestMethod.GET)
-	public @ResponseBody JSONObject chartFromDailyRecordToRest(@PathVariable("date") String date) throws ParseException{
-
+	public @ResponseBody JSONObject chartFromDailyRecordToRest(@PathVariable("username") String username, @PathVariable("date") String date) throws ParseException{
+		
+		User user = userService.getUserByNick(username);
 		
 		JSONObject data = new JSONObject();
 		JSONObject ajaxObjCols1 = new JSONObject();
@@ -206,7 +212,7 @@ public class UserPageController {
 		ajaxArrCols.add(ajaxObjCols1);
 		ajaxArrCols.add(ajaxObjCols2); 
 
-		List<ChartResponseData> chartResponseDataList = recordService.getDailyChartResponseData(date);
+		List<ChartResponseData> chartResponseDataList = recordService.getDailyChartResponseData(user.getUid(),date);
 		size = chartResponseDataList.size();
 		
 		for(int i = 0; i<size ; i++){
@@ -240,12 +246,14 @@ public class UserPageController {
 	
 	@RequestMapping(value = "/mynicotine/{username}", method = RequestMethod.GET)
 	public String myNicotine(@PathVariable("username") String username, Model model) throws ParseException {
-
+		
+		User user = userService.getUserByNick(username);
+		
 		Date currentDate = new Date();
 		SimpleDateFormat  formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String now = formatter.format(currentDate);
 		
-		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine();
+		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine(user.getUid());
 		double elapsedTime =(double)(formatter.parse(now).getTime() - nicotineResponseData.getDate().getTime())/1000.0;
 		
 		double currentNico = nicotineResponseData.getNicotine() * Math.pow(0.5, elapsedTime/7200.0);
