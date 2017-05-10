@@ -20,14 +20,18 @@
 
 
 
-
+	<security:http pattern="/android/**" security="none"/>
 	<security:http pattern="/api/**" security="none"/>
 	
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/userpage/**"
 			access="hasRole('ROLE_USER')" />
 		<security:form-login login-page="/login"
-			authentication-failure-url="/login?error" />
+			authentication-failure-url="/login?error"
+			authentication-success-handler-ref="myAuthenticationSuccessHandler" />
 	</security:http>
 
+	<bean id="myAuthenticationSuccessHandler"
+		class="kr.ac.hansung.cse.controller.MySimpleUrlAuthenticationSuccessHandler">
+	</bean>
 </beans>

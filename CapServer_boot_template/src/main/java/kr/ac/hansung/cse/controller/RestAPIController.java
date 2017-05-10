@@ -73,7 +73,7 @@ public class RestAPIController {
 			// header 에 사용자의 uri 를 넘겨줌
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(ucBuilder.path("/api/users/{id}").
-					buildAndExpand(user.getUid()).toUri());
+					buildAndExpand(user.getNick()).toUri());
 			return new ResponseEntity<Void>(headers,HttpStatus.CREATED);
 		}
 		

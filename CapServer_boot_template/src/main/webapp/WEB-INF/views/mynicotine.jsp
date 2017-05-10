@@ -6,7 +6,6 @@
 
 <script
 	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="resources/circular-progress-bar/js/index.js"></script>
 
 <div class="container-wrapper">
 	<div class="container">

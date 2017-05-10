@@ -79,7 +79,7 @@
 				href="<c:url value="/userpage/ranking/${pageContext.request.userPrincipal.name}"/>">Ranking</a> <a
 				href="<c:url value="/userpage/chartFromRecord"/>">Chart</a> <a
 				href="<c:url value="/userpage/mynicotine/${pageContext.request.userPrincipal.name}"/>">My nicotine</a> <a
-				href="<c:url value="/userpage/fagerstrom/${pageContext.request.userPrincipal.name}"/>">FagerStrom Test</a> <a
+				href="<c:url value="/userpage/fagerstrom"/>">FagerStrom Test</a> <a
 				href="<c:url value="/userpage/spend/${pageContext.request.userPrincipal.name}"/>">Spend</a> <a
 				href="<c:url value="/insertUser"/>">InsertUser</a> <a
 				href="<c:url value="/insertRecord/${pageContext.request.userPrincipal.name}"/>">InsertRec</a> <a
