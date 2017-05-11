@@ -144,7 +144,7 @@ public class UserPageController {
 		ajaxObjCols1.put("type", "string");
 
 		ajaxObjCols2.put("id", "count");
-		ajaxObjCols2.put("label", "value");
+		ajaxObjCols2.put("label", "count");
 		ajaxObjCols2.put("pattern", "");
 		ajaxObjCols2.put("type", "number");
 
@@ -202,7 +202,7 @@ public class UserPageController {
 		ajaxObjCols1.put("type", "string");
 
 		ajaxObjCols2.put("id", "count");
-		ajaxObjCols2.put("label", "value");
+		ajaxObjCols2.put("label", "count");
 		ajaxObjCols2.put("pattern", "");
 		ajaxObjCols2.put("type", "number");
 
@@ -214,7 +214,7 @@ public class UserPageController {
 
 		for (int i = 0; i < size; i++) {
 			JSONObject legend = new JSONObject();
-			legend.put("v", chartResponseDataList.get(i).getDate().toString());
+			legend.put("v", chartResponseDataList.get(i).getDate().toString().substring(0, 2)+"½Ã");
 			legend.put("f", null);
 
 			JSONObject value = new JSONObject();

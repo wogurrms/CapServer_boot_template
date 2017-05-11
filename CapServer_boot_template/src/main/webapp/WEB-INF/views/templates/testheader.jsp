@@ -9,7 +9,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-					<h1>Test</h1>
+					<h1>FagerStrom</h1>
 					<h2>FagerStrom Test</h2>
 					<div class="spacer"></div>
 				</div>

@@ -10,6 +10,8 @@
 	});
 	google.charts.setOnLoadCallback(drawBasic);
 
+	var flag = true;
+	
 	function getContextPath() {
 		var offset = location.href.indexOf(location.host)
 				+ location.host.length;
@@ -43,7 +45,7 @@
 
 		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 		chart.draw(data, options);
-		google.visualization.events.addListener(chart, 'select', selectHandler);
+		var event = google.visualization.events.addListener(chart, 'select', selectHandler);
 
 		function selectHandler() {
 			var selection = chart.getSelection();
@@ -54,10 +56,23 @@
 				type : "get",
 				async : false
 			}).responseText;
-			
+			var options = {
+					chart : {
+						title : 'My Smoking Pattern Chart'
+					},
+					vAxis : {
+						viewWindowMode : 'explicit',
+						viewWindow : {
+							max : 10,
+							min : 0
+						}
+					},
+					bars : 'vertical', // Required for Material Bar Charts.
+					height : 400
+				};
 			data = new google.visualization.DataTable(dailyJsonData);
+			google.visualization.events.removeListener(event);
 			chart.draw(data, options);
-
 		}
 		
 
@@ -89,7 +104,7 @@
 
 			var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 			chart.draw(data, options);
-			google.visualization.events.addListener(chart, 'select', selectHandler);
+			var event = google.visualization.events.addListener(chart, 'select', selectHandler);
 
 			function selectHandler() {
 				var selection = chart.getSelection();
@@ -100,8 +115,22 @@
 					type : "get",
 					async : false
 				}).responseText;
-				
+				var options = {
+						chart : {
+							title : 'My Smoking Pattern Chart'
+						},
+						vAxis : {
+							viewWindowMode : 'explicit',
+							viewWindow : {
+								max : 10,
+								min : 0
+							}
+						},
+						bars : 'vertical', // Required for Material Bar Charts.
+						height : 400
+					};
 				data = new google.visualization.DataTable(dailyJsonData);
+				google.visualization.events.removeListener(event);
 				chart.draw(data, options);
 			}
 		})

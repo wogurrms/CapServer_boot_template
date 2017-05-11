@@ -19,6 +19,11 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 
+<!-- Carousel CSS -->
+<link
+	href="<c:url value="/resources/link/Theme/assets/css/style.css"/>"
+	rel="stylesheet">
+
 
 <!-- Bootstrap core CSS -->
 <link
