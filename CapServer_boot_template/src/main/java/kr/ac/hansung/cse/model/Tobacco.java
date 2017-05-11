@@ -16,10 +16,12 @@ import lombok.Setter;
 public class Tobacco {
 	@Id
 	@GeneratedValue
-	@Column(name="tobac_id")
+	@Column(name = "tobac_id")
 	private int tobac_id;
-	
-	private String name;
-	private int price;
-	private int nicotine;
+
+	private String tobaccoBrand;
+	private String tobaccoName;
+	private int tobaccoPrice;;
+	private double tobaccoNicotine;
 }
+

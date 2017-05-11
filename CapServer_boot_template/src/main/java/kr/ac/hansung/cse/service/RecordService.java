@@ -58,5 +58,9 @@ public class RecordService {
 		return recordDao.getLatestNicotine(uid);
 	}
 
+	public int getAllRecordCountByUid(int uid) {
+		return recordDao.getAllRecordCountByUid(uid);
+	}
+
 
 }

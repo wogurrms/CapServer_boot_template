@@ -130,4 +130,15 @@ public class RecordDAO {
 
 		return result;
 	}
+
+	public int getAllRecordCountByUid(int uid) {
+		Session session = sessionFactory.getCurrentSession();
+		String hqlQuery = "select count(*) from Record where user_id = :uid";
+		Query query = session.createQuery(hqlQuery);
+		query.setParameter("uid", uid);
+		
+		Long result = (Long) query.uniqueResult();
+
+		return result.intValue();
+	}
 }

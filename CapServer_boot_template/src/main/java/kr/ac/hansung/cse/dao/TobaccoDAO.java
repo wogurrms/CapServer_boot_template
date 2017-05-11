@@ -51,4 +51,15 @@ public class TobaccoDAO {
 		session.saveOrUpdate(tobacco);
 		session.flush();
 	}
+
+	public Tobacco getTobaccoByBrandAndName(String tobaccoBrandName, String tobaccoName) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Tobacco where tobaccoBrand = :tobaccobrand and tobaccoName = :tobacconame");
+		query.setParameter("tobaccobrand", tobaccoBrandName);
+		query.setParameter("tobacconame", tobaccoName);
+		
+		Tobacco tobacco = (Tobacco)query.uniqueResult();
+
+		return tobacco;
+	}
 }

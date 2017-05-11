@@ -33,9 +33,10 @@ public class InsertController {
 		String now = formatter.format(new Date());
 
 		Tobacco tobacco = new Tobacco();
-		tobacco.setName("말보로레드");
-		tobacco.setPrice(4500);
-		tobacco.setNicotine(8);
+		tobacco.setTobaccoBrand("말보로");
+		tobacco.setTobaccoName("레드");
+		tobacco.setTobaccoPrice(4500);
+		tobacco.setTobaccoNicotine(8.0);
 
 		User user = new User();
 		user.setNick("wogur");
@@ -75,7 +76,7 @@ public class InsertController {
 		Record record = new Record();
 		record.setUser(user);
 		record.setDate(formatter.parse(now));
-		record.setNicotine(user.getTobac().getNicotine() + formattedNico);
+		record.setNicotine(user.getTobac().getTobaccoNicotine() + formattedNico);
 
 		recordService.addRecord(record);
 
@@ -92,7 +93,7 @@ public class InsertController {
 		Record record = new Record();
 		record.setUser(user);
 		record.setDate(formatter.parse(yesterday));
-		record.setNicotine(user.getTobac().getNicotine());
+		record.setNicotine(user.getTobac().getTobaccoNicotine());
 
 		recordService.addRecord(record);
 

@@ -32,6 +32,9 @@ public class TobaccoService {
 
 	public void editTobacco(Tobacco tobacco) {
 		tobaccoDao.editTobacco(tobacco);
+	}
 
+	public Tobacco getTobaccoByBrandAndName(String tobaccoBrandName, String tobaccoName) {
+		return tobaccoDao.getTobaccoByBrandAndName(tobaccoBrandName, tobaccoName);
 	}
 }

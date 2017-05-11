@@ -1,18 +1,24 @@
 package kr.ac.hansung.cse.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import kr.ac.hansung.cse.model.NicotineResponseData;
 import kr.ac.hansung.cse.model.Record;
+import kr.ac.hansung.cse.model.Tobacco;
 import kr.ac.hansung.cse.model.User;
 import kr.ac.hansung.cse.service.RecordService;
 import kr.ac.hansung.cse.service.TobaccoService;
@@ -39,16 +45,27 @@ public class RestAPIController {
 		// Body 부분이 없다는 의미로 <Void> 를 넣어줌
 		System.out.println("Request RestAPI Controller");
 		String username = "";
-		double nicotine = 0;
+		double nicotine = 0.0;
+		double formattedCurrentNico = 0.0;
 		
 		User user = record.getUser();
 		username = user.getNick();
 		
 		User userFromDB = userService.getUserByNick(username);
-		nicotine = userFromDB.getTobac().getNicotine();
+		nicotine = userFromDB.getTobac().getTobaccoNicotine();
+		
+		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine(userFromDB.getUid());
+		if (nicotineResponseData != null) {
+			double elapsedTime = (double) (record.getDate().getTime() - nicotineResponseData.getDate().getTime())
+					/ 1000.0;
+			double currentNico = nicotineResponseData.getNicotine() * Math.pow(0.5, elapsedTime / 7200.0);
+			formattedCurrentNico = Double.parseDouble(String.format("%.2f", currentNico));
+		}
+		
+		
 		
 		record.setUser(userFromDB);
-		record.setNicotine(nicotine);
+		record.setNicotine(nicotine + formattedCurrentNico);
 		
 		recordService.addRecord(record);
 		
@@ -58,9 +75,7 @@ public class RestAPIController {
 				buildAndExpand(record.getRecord_id()).toUri());
 		return new ResponseEntity<Void>(headers,HttpStatus.CREATED);
 	}
-	
-	
-	
+
 	// ----------------------------- Retrieve All Users -----------------------------
 	
 	@RequestMapping(value="/users", method=RequestMethod.GET)
@@ -96,7 +111,12 @@ public class RestAPIController {
 			if(userService.isUserExist(user)){
 				// to do Exception , User가 이미 존재할 경우 오류
 			}
-			user.setTobac(tobaccoService.getTobaccoById(1));
+			String tobaccoBrandName = user.getTobac().getTobaccoBrand();
+			String tobaccoName = user.getTobac().getTobaccoName();
+			
+			Tobacco tobacco = tobaccoService.getTobaccoByBrandAndName(tobaccoBrandName, tobaccoName);
+			
+			user.setTobac(tobacco);
 			user.setEnabled(1);
 			user.setAuthority("ROLE_USER");
 			userService.addUser(user);
