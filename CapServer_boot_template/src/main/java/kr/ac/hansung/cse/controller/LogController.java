@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,11 +46,11 @@ public class LogController {
 	// GET 메소드 처리 login 버튼이 눌렸을 때의 처리 display form
 	// POST 메소드 처리 - 사용자가 입력한 정보와 DB 를 비교하여 검증 : spring 에서 자동으로 처리
 	@RequestMapping(value="/android/login", method = RequestMethod.POST)
-	public @ResponseBody Map androidLogin(@RequestBody User user){
+	public @ResponseBody JSONObject androidLogin(@RequestBody User user){
 		String username = user.getNick();
 		String password = user.getPassword();
 		
-		Map result = new HashMap();
+		JSONObject result = new JSONObject();
 		
 		User userFromDB = userService.getUserByNick(username);
 		if(userFromDB != null){

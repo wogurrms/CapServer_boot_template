@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import kr.ac.hansung.cse.model.Record;
 import kr.ac.hansung.cse.model.User;
 import kr.ac.hansung.cse.service.RecordService;
 import kr.ac.hansung.cse.service.TobaccoService;
@@ -29,6 +30,36 @@ public class RestAPIController {
 	
 	@Autowired
 	private UserService userService;
+	
+	// ----------------------------- Create a Record -----------------------------------
+	
+	@RequestMapping(value="/records", method=RequestMethod.POST)	// Request body(json)에 사용자의 정보가 json 포맷으로 넘어옴
+	public ResponseEntity<Void> createRecord(@RequestBody Record record, 
+			UriComponentsBuilder ucBuilder) {
+		// Body 부분이 없다는 의미로 <Void> 를 넣어줌
+		System.out.println("Request RestAPI Controller");
+		String username = "";
+		double nicotine = 0;
+		
+		User user = record.getUser();
+		username = user.getNick();
+		
+		User userFromDB = userService.getUserByNick(username);
+		nicotine = userFromDB.getTobac().getNicotine();
+		
+		record.setUser(userFromDB);
+		record.setNicotine(nicotine);
+		
+		recordService.addRecord(record);
+		
+		// header 에 사용자의 uri 를 넘겨줌
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(ucBuilder.path("/api/records/{id}").
+				buildAndExpand(record.getRecord_id()).toUri());
+		return new ResponseEntity<Void>(headers,HttpStatus.CREATED);
+	}
+	
+	
 	
 	// ----------------------------- Retrieve All Users -----------------------------
 	
