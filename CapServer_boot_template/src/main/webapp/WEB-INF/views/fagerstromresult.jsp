@@ -7,10 +7,10 @@
 	<div class="container">
 		<h2>FagerStrom Reult Page</h2>
 		<p class="lead">파거스트롬 테스트!</p>
-		<table class="table table-condensed" action>
-			<tr>
-				<th style="text-align: center">니코틴 의존도</th>
-				<th style="text-align: center">사용자의 상태</th>
+		<table class="table table-striped">
+			<tr class="success">
+				<th style="text-align: center">Nicotine Dependence</th>
+				<th style="text-align: center">User Status</th>
 			</tr>
 			<tr>
 				<td align="center">${resultMap.nicotineDependence}</td>
@@ -20,4 +20,3 @@
 
 	</div>
 </div>
-
