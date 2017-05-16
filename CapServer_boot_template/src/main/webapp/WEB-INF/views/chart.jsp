@@ -13,7 +13,7 @@
 	
 	function drawBasic() {
 		var jsonData = $.ajax({
-			url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArray/" + "${pageContext.request.userPrincipal.name}",
+			url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArray",
 			dataType : "json",
 			data : data,
 			async : false
@@ -43,8 +43,7 @@
 			var selection = chart.getSelection();
 			var requestData = data.getValue(selection[0].row, 0);
 			var dailyJsonData = $.ajax({
-				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily/" + "${pageContext.request.userPrincipal.name}/"
-						+ requestData,
+				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily" + requestData,
 				type : "get",
 				async : false
 			}).responseText;
@@ -74,7 +73,7 @@
 	$(document).ready(function(){
 		$("#refresh-btn").click(function(){
 			var jsonData = $.ajax({
-				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArray/" + "${pageContext.request.userPrincipal.name}",
+				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArray",
 				dataType : "json",
 				data : data,
 				async : false
@@ -104,8 +103,7 @@
 				var selection = chart.getSelection();
 				var requestData = data.getValue(selection[0].row, 0);
 				var dailyJsonData = $.ajax({
-					url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily/" + "${pageContext.request.userPrincipal.name}/"
-					+ requestData,
+					url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily/" + requestData,
 					type : "get",
 					async : false
 				}).responseText;

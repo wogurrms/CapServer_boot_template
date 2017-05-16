@@ -10,6 +10,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,8 +44,8 @@ public class UserPageController {
 		return "fagerstrom";
 	}
 
-	@RequestMapping(value = "/ranking/{username}", method = RequestMethod.GET)
-	public String ranking(@PathVariable("username") String username) {
+	@RequestMapping(value = "/ranking", method = RequestMethod.GET)
+	public String ranking() {
 		
 		return "ranking";
 	}
@@ -128,11 +129,12 @@ public class UserPageController {
 		return data;
 	}
 
-	@RequestMapping(value = "/fagerstromresult/{username}", method = RequestMethod.GET)
-	public String fagerStromResult(@PathVariable("username") String username, @RequestParam("radio-1") int value1,
+	@RequestMapping(value = "/fagerstromresult", method = RequestMethod.GET)
+	public String fagerStromResult(@RequestParam("radio-1") int value1,
 			@RequestParam("radio-2") int value2, @RequestParam("radio-3") int value3,
-			@RequestParam("radio-4") int value4, Model model) {
+			@RequestParam("radio-4") int value4, Model model, Authentication authentication) {
 		
+		String username = authentication.getName();
 		
 		User user = userService.getUserByNick(username);
 
@@ -180,9 +182,10 @@ public class UserPageController {
 	}
 
 
-	@RequestMapping(value = "/todayamount/{username}", method = RequestMethod.GET)
-	public String getTodayAmount(@PathVariable("username") String username, Model model) {
+	@RequestMapping(value = "/todayamount", method = RequestMethod.GET)
+	public String getTodayAmount(Model model, Authentication authentication) {
 		
+		String username = authentication.getName();
 		
 		User user = userService.getUserByNick(username);
 
@@ -201,8 +204,10 @@ public class UserPageController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/chartFromRecordToJsonArray/{username}", method = RequestMethod.GET)
-	public @ResponseBody JSONObject chartFromRecordToRest(@PathVariable("username") String username, Model model) {
+	@RequestMapping(value = "/chartFromRecordToJsonArray", method = RequestMethod.GET)
+	public @ResponseBody JSONObject chartFromRecordToRest(Model model, Authentication authentication) {
+
+		String username = authentication.getName();
 
 		User user = userService.getUserByNick(username);
 
@@ -258,9 +263,11 @@ public class UserPageController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/chartFromRecordToJsonArrayDaily/{username}/{date}", method = RequestMethod.GET)
-	public @ResponseBody JSONObject chartFromDailyRecordToRest(@PathVariable("username") String username,
-			@PathVariable("date") String date) throws ParseException {
+	@RequestMapping(value = "/chartFromRecordToJsonArrayDaily/{date}", method = RequestMethod.GET)
+	public @ResponseBody JSONObject chartFromDailyRecordToRest(@PathVariable("date") String date,
+			Authentication authentication) throws ParseException {
+
+		String username = authentication.getName();
 
 		User user = userService.getUserByNick(username);
 
@@ -315,9 +322,10 @@ public class UserPageController {
 		return data;
 	}
 
-	@RequestMapping(value = "/mynicotine/{username}", method = RequestMethod.GET)
-	public String myNicotine(@PathVariable("username") String username, Model model) throws ParseException {
+	@RequestMapping(value = "/mynicotine", method = RequestMethod.GET)
+	public String myNicotine(Model model, Authentication authentication) throws ParseException {
 		
+		String username = authentication.getName();
 		
 		User user = userService.getUserByNick(username);
 
@@ -343,10 +351,11 @@ public class UserPageController {
 		return "mynicotine";
 	}
 	
-	@RequestMapping(value = "/spend/{username}", method = RequestMethod.GET)
-	public String mySpendMoney(@PathVariable("username") String username, Model model) throws ParseException {
+	@RequestMapping(value = "/spend", method = RequestMethod.GET)
+	public String mySpendMoney(Model model, Authentication authentication) throws ParseException {
 		
-		
+		String username = authentication.getName();
+
 		User user = userService.getUserByNick(username);
 		Tobacco tobacco = user.getTobac();
 		int price = tobacco.getTobaccoPrice();

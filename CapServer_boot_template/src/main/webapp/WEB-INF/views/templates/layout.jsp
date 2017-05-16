@@ -19,11 +19,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 
-<!-- Carousel CSS -->
-<link
-	href="<c:url value="/resources/link/Theme/assets/css/style.css"/>"
-	rel="stylesheet">
-
 
 <!-- Bootstrap core CSS -->
 <link
@@ -80,13 +75,13 @@
 			</h1>
 			<i class="fa fa-arrow-right menu-close"></i> <a href="/CapServer">Home</a>
 			<a
-				href="<c:url value="/userpage/todayamount/${pageContext.request.userPrincipal.name}"/>" >TodayAmount</a> <a
-				href="<c:url value="/userpage/ranking/${pageContext.request.userPrincipal.name}"/>">Ranking</a> <a
+				href="<c:url value="/userpage/todayamount"/>" >TodayAmount</a> <a
+				href="<c:url value="/userpage/ranking"/>">Ranking</a> <a
 				href="<c:url value="/userpage/chartFromRecord"/>">Chart</a> <a
-				href="<c:url value="/userpage/mynicotine/${pageContext.request.userPrincipal.name}"/>">My nicotine</a> <a
+				href="<c:url value="/userpage/mynicotine"/>">My nicotine</a> <a
 				href="<c:url value="/userpage/fagerstrom"/>">FagerStrom Test</a> <a
-				href="<c:url value="/userpage/spend/${pageContext.request.userPrincipal.name}"/>">Spend</a> <a
-				href="<c:url value="/userpage/spend/${pageContext.request.userPrincipal.name}"/>">My Calendar</a> <a
+				href="<c:url value="/userpage/spend"/>">Spend</a> <a
+				href="<c:url value="/userpage/spend"/>">My Calendar</a> <a
 				href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
 				class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-dribbble"></i></a>
 			<a href="#"><i class="fa fa-envelope"></i></a>

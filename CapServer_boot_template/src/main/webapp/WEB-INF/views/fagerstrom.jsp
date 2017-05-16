@@ -9,7 +9,7 @@
 	<div class="container">
 		<h2>FagerStrom Test</h2>
 		<p class="lead">파거스트롬 테스트!</p>
-		<form name="q1" action=<c:url value="/userpage/fagerstromresult/${pageContext.request.userPrincipal.name}"/> method="get">
+		<form name="q1" action=<c:url value="/userpage/fagerstromresult"/> method="get">
 
 			<table class="table table-condensed" action>
 				<tr>
