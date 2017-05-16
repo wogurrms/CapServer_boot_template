@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.hansung.cse.dao.RecordDAO;
 import kr.ac.hansung.cse.model.ChartResponseData;
 import kr.ac.hansung.cse.model.NicotineResponseData;
+import kr.ac.hansung.cse.model.RankingResponseData;
 import kr.ac.hansung.cse.model.Record;
 import kr.ac.hansung.cse.model.User;
 
@@ -61,6 +62,7 @@ public class RecordService {
 	public int getAllRecordCountByUid(int uid) {
 		return recordDao.getAllRecordCountByUid(uid);
 	}
+
 
 
 }

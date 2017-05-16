@@ -2,6 +2,7 @@ package kr.ac.hansung.cse.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.hansung.cse.model.ChartResponseData;
 import kr.ac.hansung.cse.model.NicotineResponseData;
+import kr.ac.hansung.cse.model.RankingResponseData;
 import kr.ac.hansung.cse.model.ResponseData;
 import kr.ac.hansung.cse.model.Tobacco;
 import kr.ac.hansung.cse.model.User;
@@ -45,6 +47,85 @@ public class UserPageController {
 	public String ranking(@PathVariable("username") String username) {
 		
 		return "ranking";
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/rankingFromRecordToJsonArray", method = RequestMethod.GET)
+	public @ResponseBody JSONObject rankingFromRecordToRest() {
+
+
+		JSONObject data = new JSONObject();
+		JSONObject ajaxObjCols1 = new JSONObject();
+		JSONObject ajaxObjCols2 = new JSONObject();
+		JSONObject ajaxObjCols3 = new JSONObject();
+		JSONArray ajaxArrCols = new JSONArray();
+		JSONArray ajaxArrRows = new JSONArray();
+
+		int size = 0;
+
+		ajaxObjCols1.put("id", "username");
+		ajaxObjCols1.put("label", "UserName");
+		ajaxObjCols1.put("pattern", "");
+		ajaxObjCols1.put("type", "string");
+
+		ajaxObjCols2.put("id", "count");
+		ajaxObjCols2.put("label", "TodayCount");
+		ajaxObjCols2.put("pattern", "");
+		ajaxObjCols2.put("type", "number");
+		
+		ajaxObjCols3.put("id", "avg");
+		ajaxObjCols3.put("label", "Average");
+		ajaxObjCols3.put("pattern", "");
+		ajaxObjCols3.put("type", "number");
+
+		ajaxArrCols.add(ajaxObjCols1);
+		ajaxArrCols.add(ajaxObjCols2);
+		ajaxArrCols.add(ajaxObjCols3);
+
+		List<RankingResponseData> rankingResponseDataList = new ArrayList<RankingResponseData>();
+		List<User> userList = userService.getUsers();
+		for(User user : userList){
+			RankingResponseData rankingResponseData = new RankingResponseData();
+			rankingResponseData.setUsername(user.getNick());
+			rankingResponseData.setTodayAmount(recordService.getTodayAmount(user.getUid()));
+			rankingResponseData.setAvg(recordService.getAvgAmount(user.getUid()));
+			rankingResponseDataList.add(rankingResponseData);
+		}
+		
+		size = rankingResponseDataList.size();
+
+		for (int i = 0; i < size; i++) {
+			JSONObject legend = new JSONObject();
+			legend.put("v", rankingResponseDataList.get(i).getUsername().toString());
+			legend.put("f", null);
+
+			JSONObject value1 = new JSONObject();
+			value1.put("v", rankingResponseDataList.get(i).getTodayAmount());
+			value1.put("f", null);
+
+			JSONObject value2 = new JSONObject();
+			value2.put("v", rankingResponseDataList.get(i).getAvg());
+			value2.put("f", null);
+
+			
+			JSONArray cValueArray = new JSONArray();
+			cValueArray.add(legend);
+			cValueArray.add(value1);
+			cValueArray.add(value2);
+
+			JSONObject cValueObj = new JSONObject();
+			cValueObj.put("c", cValueArray);
+
+			ajaxArrRows.add(cValueObj);
+
+		}
+
+		data.put("cols", ajaxArrCols);
+		data.put("rows", ajaxArrRows);
+		System.out.println(data);
+
+		return data;
 	}
 
 	@RequestMapping(value = "/fagerstromresult/{username}", method = RequestMethod.GET)

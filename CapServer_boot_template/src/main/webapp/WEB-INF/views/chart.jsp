@@ -10,19 +10,10 @@
 	});
 	google.charts.setOnLoadCallback(drawBasic);
 
-	var flag = true;
-	
-	function getContextPath() {
-		var offset = location.href.indexOf(location.host)
-				+ location.host.length;
-		var ctxPath = location.href.substring(offset, location.href
-				.indexOf('/', offset + 1));
-		return ctxPath;
-	}
 	
 	function drawBasic() {
 		var jsonData = $.ajax({
-			url : getContextPath() + "/userpage/chartFromRecordToJsonArray/" + "${pageContext.request.userPrincipal.name}",
+			url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArray/" + "${pageContext.request.userPrincipal.name}",
 			dataType : "json",
 			data : data,
 			async : false
@@ -40,7 +31,8 @@
 				}
 			},
 			bars : 'vertical', // Required for Material Bar Charts.
-			height : 400
+			height : 400,
+			colors : ['#99daea']
 		};
 
 		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -51,7 +43,7 @@
 			var selection = chart.getSelection();
 			var requestData = data.getValue(selection[0].row, 0);
 			var dailyJsonData = $.ajax({
-				url : getContextPath() + "/userpage/chartFromRecordToJsonArrayDaily/" + "${pageContext.request.userPrincipal.name}/"
+				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily/" + "${pageContext.request.userPrincipal.name}/"
 						+ requestData,
 				type : "get",
 				async : false
@@ -68,7 +60,8 @@
 						}
 					},
 					bars : 'vertical', // Required for Material Bar Charts.
-					height : 400
+					height : 400,
+					colors : ['#99daea']
 				};
 			data = new google.visualization.DataTable(dailyJsonData);
 			google.visualization.events.removeListener(event);
@@ -81,7 +74,7 @@
 	$(document).ready(function(){
 		$("#refresh-btn").click(function(){
 			var jsonData = $.ajax({
-				url : getContextPath() + "/userpage/chartFromRecordToJsonArray/" + "${pageContext.request.userPrincipal.name}",
+				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArray/" + "${pageContext.request.userPrincipal.name}",
 				dataType : "json",
 				data : data,
 				async : false
@@ -99,7 +92,8 @@
 					}
 				},
 				bars : 'vertical', // Required for Material Bar Charts.
-				height : 400
+				height : 400,
+				colors : ['#99daea']
 			};
 
 			var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -110,7 +104,7 @@
 				var selection = chart.getSelection();
 				var requestData = data.getValue(selection[0].row, 0);
 				var dailyJsonData = $.ajax({
-					url : getContextPath() + "/userpage/chartFromRecordToJsonArrayDaily/" + "${pageContext.request.userPrincipal.name}/"
+					url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily/" + "${pageContext.request.userPrincipal.name}/"
 					+ requestData,
 					type : "get",
 					async : false
@@ -127,7 +121,8 @@
 							}
 						},
 						bars : 'vertical', // Required for Material Bar Charts.
-						height : 400
+						height : 400,
+						colors : ['#99daea']
 					};
 				data = new google.visualization.DataTable(dailyJsonData);
 				google.visualization.events.removeListener(event);
@@ -139,8 +134,8 @@
 
 <div class="container-wrapper">
 	<div class="container">
-		<h2></h2>
-		<p class="lead"></p>
+		<h2>Your Smoking Pattern Chart</h2>
+		<p class="lead">당신의 흡연기록 차트입니다.</p>
 		<div id="chart_div"></div>
 		<p space></p>
 		<button id ="refresh-btn" type="button" class="btn btn-default">일간 차트</button>

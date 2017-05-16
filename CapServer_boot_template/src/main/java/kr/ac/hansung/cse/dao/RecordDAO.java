@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.hansung.cse.model.ChartResponseData;
 import kr.ac.hansung.cse.model.NicotineResponseData;
+import kr.ac.hansung.cse.model.RankingResponseData;
 import kr.ac.hansung.cse.model.Record;
 import kr.ac.hansung.cse.model.User;
 
@@ -141,4 +142,5 @@ public class RecordDAO {
 
 		return result.intValue();
 	}
+
 }
