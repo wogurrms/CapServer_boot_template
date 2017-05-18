@@ -81,7 +81,7 @@
 				href="<c:url value="/userpage/mynicotine"/>">My nicotine</a> <a
 				href="<c:url value="/userpage/fagerstrom"/>">FagerStrom Test</a> <a
 				href="<c:url value="/userpage/spend"/>">Spend</a> <a
-				href="<c:url value="/userpage/spend"/>">My Calendar</a> <a
+				href="<c:url value="/userpage/calendar"/>">My Calendar</a> <a
 				href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
 				class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-dribbble"></i></a>
 			<a href="#"><i class="fa fa-envelope"></i></a>

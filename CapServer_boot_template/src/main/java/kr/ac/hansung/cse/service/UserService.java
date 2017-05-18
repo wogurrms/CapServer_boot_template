@@ -1,5 +1,6 @@
 package kr.ac.hansung.cse.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class UserService {
 
 	public boolean isUserExist(User user){
 		return userDao.getUserByNick(user.getNick()) != null; 
+	}
+
+	public int getUserCountByDate(Date date) {
+		return userDao.getUserCountByDate(date); 
 	}
 
 }

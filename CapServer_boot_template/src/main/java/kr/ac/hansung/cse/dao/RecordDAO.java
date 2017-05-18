@@ -2,6 +2,7 @@ package kr.ac.hansung.cse.dao;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,10 +13,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.hansung.cse.model.ChartResponseData;
+import kr.ac.hansung.cse.model.ChartResponseDataAvg;
 import kr.ac.hansung.cse.model.NicotineResponseData;
-import kr.ac.hansung.cse.model.RankingResponseData;
 import kr.ac.hansung.cse.model.Record;
-import kr.ac.hansung.cse.model.User;
 
 @Repository
 @Transactional
@@ -87,9 +87,10 @@ public class RecordDAO {
 		return avg;
 	}
 
+
 	public List<ChartResponseData> getChartResponseData(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*) , cast(r.date as date) )"
+		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*), cast(r.date as date) )"
 				+ "from Record r where user_id = :uid group by cast(r.date as date)";
 		Query query = session.createQuery(hqlQuery);
 		query.setParameter("uid", uid);
@@ -97,10 +98,42 @@ public class RecordDAO {
 		List<ChartResponseData> results = query.list();
 		return results;
 	}
+	
+	
+	public List<ChartResponseDataAvg> getChartResponseDataAvg() {
+		Session session = sessionFactory.getCurrentSession();
+		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseDataAvg( count(*)/userCount , cast(r.date as date) as date )"
+				+ "from Record r group by cast(r.date as date)";
+		Query query = session.createQuery(hqlQuery);
+
+		List<ChartResponseDataAvg> results = query.list();
+		return results;
+	}
+
+	public Long getRecordAvgByDate(String date) {
+		Session session = sessionFactory.getCurrentSession();
+		String hqlQuery = "select count(*)/userCount from Record r "
+				+ "where year(r.date) = :year and month(r.date) = :month and day(r.date) = :day "
+				+ "group by cast(r.date as date)";
+
+		String[] splitted = date.split("-");
+		int year = Integer.parseInt(splitted[0]);
+		int month = Integer.parseInt(splitted[1]);
+		int day = Integer.parseInt(splitted[2]);
+		
+		Query query = session.createQuery(hqlQuery);
+		query.setParameter("year", year);
+		query.setParameter("month", month);
+		query.setParameter("day", day);
+		
+		Long results = (Long) query.uniqueResult();
+		return results;
+	}
+	
 
 	public List<ChartResponseData> getDailyChartResponseData(int uid, String date) throws ParseException {
 		Session session = sessionFactory.getCurrentSession();
-		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*) , cast(r.date as time) ) "
+		String hqlQuery = "select new kr.ac.hansung.cse.model.ChartResponseData( count(*) ,cast(r.date as time) ) "
 				+ "from Record r where user_id = :uid and year(r.date) = :year and month(r.date) = :month and day(r.date) = :day "
 				+ "group by hour(r.date)";
 		

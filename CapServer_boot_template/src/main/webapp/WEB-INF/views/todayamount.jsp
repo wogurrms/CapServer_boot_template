@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="container-wrapper">
 	<div class="container">
@@ -17,7 +17,7 @@
 			<tbody>
 				<tr>
 					<td align="center"><h2>${responseData.todayAmount}</h2></td>
-					<td align="center"><h2>${responseData.avg}</h2></td>
+					<td align="center"><h2><fmt:formatNumber value="${responseData.avg}" pattern=".00"/></h2></td>
 				</tr>
 			</tbody>
 		</table>

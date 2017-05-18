@@ -15,7 +15,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td align="center"><h2>W ${myTotalSpend}</h2></td>
+					<td align="center"><h2> ${myTotalSpend} 원</h2></td>
 				</tr>
 			</tbody>
 		</table>

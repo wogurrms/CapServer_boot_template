@@ -54,6 +54,8 @@ public class RestAPIController {
 		User userFromDB = userService.getUserByNick(username);
 		nicotine = userFromDB.getTobac().getTobaccoNicotine();
 		
+		int userCount = userService.getUserCountByDate(record.getDate());
+		
 		NicotineResponseData nicotineResponseData = recordService.getLatestNicotine(userFromDB.getUid());
 		if (nicotineResponseData != null) {
 			double elapsedTime = (double) (record.getDate().getTime() - nicotineResponseData.getDate().getTime())
@@ -63,7 +65,7 @@ public class RestAPIController {
 		}
 		
 		
-		
+		record.setUserCount(userCount);
 		record.setUser(userFromDB);
 		record.setNicotine(nicotine + formattedCurrentNico);
 		
@@ -88,6 +90,19 @@ public class RestAPIController {
 		}
 		return new ResponseEntity<List<User>>(users,HttpStatus.OK);
 	}
+	
+	// ----------------------------- Retrieve Avg By Date --------------------------
+	
+	@RequestMapping(value="/avg/{date}", method=RequestMethod.GET)
+	public ResponseEntity<Long> getUser(@PathVariable("date") String date){
+		Long result = recordService.getRecordAvgByDate(date);
+		if(result == null){
+			result = 0L;
+		}
+		return new ResponseEntity<Long>(result,HttpStatus.OK);
+	}
+	
+	
 //	
 //	// ----------------------------- Retrieve Single User --------------------------
 //	
@@ -116,9 +131,12 @@ public class RestAPIController {
 			
 			Tobacco tobacco = tobaccoService.getTobaccoByBrandAndName(tobaccoBrandName, tobaccoName);
 			
+			Date joinDate = new Date();
+			
 			user.setTobac(tobacco);
 			user.setEnabled(1);
 			user.setAuthority("ROLE_USER");
+			user.setJoinDate(joinDate);
 			userService.addUser(user);
 			
 			// header 에 사용자의 uri 를 넘겨줌

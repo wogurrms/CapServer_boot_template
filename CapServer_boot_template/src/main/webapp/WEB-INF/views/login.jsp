@@ -7,11 +7,11 @@
 	<h2>Login with Username and Password</h2>
 	
 	<c:if test="${not empty logout}">
-	<div style="color:#0000ff"> <h3> ${logout}</h3> </div>
+	<div> <h3 style="color:#0000ff"> ${logout}</h3> </div>
 	</c:if>
 	
 	<c:if test="${not empty error}">
-	<div style="color:#ff0000"> <h3> ${error}</h3> </div>
+	<div> <h3 style="color:#ff0000"> ${error}</h3> </div>
 	</c:if>
 	
 		<form action=<c:url value="/login"/> method="post">

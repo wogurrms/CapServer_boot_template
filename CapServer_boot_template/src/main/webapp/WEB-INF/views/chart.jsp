@@ -32,7 +32,7 @@
 			},
 			bars : 'vertical', // Required for Material Bar Charts.
 			height : 400,
-			colors : ['#99daea']
+			colors : ['#99daea','#ffad77']
 		};
 
 		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -43,7 +43,7 @@
 			var selection = chart.getSelection();
 			var requestData = data.getValue(selection[0].row, 0);
 			var dailyJsonData = $.ajax({
-				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily" + requestData,
+				url : "${pageContext.request.contextPath}" + "/userpage/chartFromRecordToJsonArrayDaily/" + requestData,
 				type : "get",
 				async : false
 			}).responseText;
@@ -92,7 +92,7 @@
 				},
 				bars : 'vertical', // Required for Material Bar Charts.
 				height : 400,
-				colors : ['#99daea']
+				colors : ['#99daea','#ffad77']
 			};
 
 			var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));

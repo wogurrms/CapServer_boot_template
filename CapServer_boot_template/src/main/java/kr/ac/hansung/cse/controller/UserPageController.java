@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.hansung.cse.model.ChartResponseData;
+import kr.ac.hansung.cse.model.ChartResponseDataAvg;
 import kr.ac.hansung.cse.model.NicotineResponseData;
 import kr.ac.hansung.cse.model.RankingResponseData;
 import kr.ac.hansung.cse.model.ResponseData;
@@ -48,6 +49,12 @@ public class UserPageController {
 	public String ranking() {
 		
 		return "ranking";
+	}
+
+	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
+	public String calendar() {
+		
+		return "calendar";
 	}
 	
 
@@ -214,6 +221,7 @@ public class UserPageController {
 		JSONObject data = new JSONObject();
 		JSONObject ajaxObjCols1 = new JSONObject();
 		JSONObject ajaxObjCols2 = new JSONObject();
+		JSONObject ajaxObjCols3 = new JSONObject();
 		JSONArray ajaxArrCols = new JSONArray();
 		JSONArray ajaxArrRows = new JSONArray();
 
@@ -225,14 +233,22 @@ public class UserPageController {
 		ajaxObjCols1.put("type", "string");
 
 		ajaxObjCols2.put("id", "count");
-		ajaxObjCols2.put("label", "count");
+		ajaxObjCols2.put("label", "My Count");
 		ajaxObjCols2.put("pattern", "");
 		ajaxObjCols2.put("type", "number");
 
+		ajaxObjCols3.put("id", "count");
+		ajaxObjCols3.put("label", "User Avg");
+		ajaxObjCols3.put("pattern", "");
+		ajaxObjCols3.put("type", "number");
+		
 		ajaxArrCols.add(ajaxObjCols1);
 		ajaxArrCols.add(ajaxObjCols2);
+		ajaxArrCols.add(ajaxObjCols3);
 
 		List<ChartResponseData> chartResponseDataList = recordService.getChartResponseData(user.getUid());
+		List<ChartResponseDataAvg> chartResponseDataAvgList = recordService.getChartResponseDataAvg();
+
 		size = chartResponseDataList.size();
 
 		for (int i = 0; i < size; i++) {
@@ -240,13 +256,18 @@ public class UserPageController {
 			legend.put("v", chartResponseDataList.get(i).getDate().toString());
 			legend.put("f", null);
 
-			JSONObject value = new JSONObject();
-			value.put("v", chartResponseDataList.get(i).getCount());
-			value.put("f", null);
+			JSONObject value1 = new JSONObject();
+			value1.put("v", chartResponseDataList.get(i).getCount());
+			value1.put("f", null);
 
+			JSONObject value2 = new JSONObject();
+			value2.put("v", chartResponseDataAvgList.get(i).getAvg());
+			value2.put("f", null);
+			
 			JSONArray cValueArray = new JSONArray();
 			cValueArray.add(legend);
-			cValueArray.add(value);
+			cValueArray.add(value1);
+			cValueArray.add(value2);
 
 			JSONObject cValueObj = new JSONObject();
 			cValueObj.put("c", cValueArray);
@@ -330,7 +351,7 @@ public class UserPageController {
 		User user = userService.getUserByNick(username);
 
 		Date currentDate = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String now = formatter.format(currentDate);
 		
 		double elapsedTime = 0;
@@ -346,7 +367,9 @@ public class UserPageController {
 		
 
 		double formattedNico = Double.parseDouble(String.format("%.2f", currentNico));
-
+		
+		System.out.println(formattedNico);
+		
 		model.addAttribute("mynicotine", formattedNico);
 		return "mynicotine";
 	}

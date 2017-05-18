@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.hansung.cse.dao.RecordDAO;
 import kr.ac.hansung.cse.model.ChartResponseData;
+import kr.ac.hansung.cse.model.ChartResponseDataAvg;
 import kr.ac.hansung.cse.model.NicotineResponseData;
-import kr.ac.hansung.cse.model.RankingResponseData;
 import kr.ac.hansung.cse.model.Record;
-import kr.ac.hansung.cse.model.User;
 
 @Service
 public class RecordService {
@@ -63,6 +62,13 @@ public class RecordService {
 		return recordDao.getAllRecordCountByUid(uid);
 	}
 
+	public List<ChartResponseDataAvg> getChartResponseDataAvg() {
+		return recordDao.getChartResponseDataAvg();
+	}
+	
+	public Long getRecordAvgByDate(String date){
+		return recordDao.getRecordAvgByDate(date);
+	}
 
 
 }

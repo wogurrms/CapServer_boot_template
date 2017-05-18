@@ -109,4 +109,9 @@
     <put-attribute name="title" value="My Ranking in All Users" />
     <put-attribute name="body" value="/WEB-INF/views/spend.jsp" />
   </definition>
+     <!-- 달력 -->
+  <definition name="calendar" extends="base">
+    <put-attribute name="title" value="My Ranking in All Users" />
+    <put-attribute name="body" value="/WEB-INF/views/calendar.jsp" />
+  </definition>
 </tiles-definitions>

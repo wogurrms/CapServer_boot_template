@@ -1,5 +1,6 @@
 package kr.ac.hansung.cse.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -58,6 +59,15 @@ public class UserDAO {
 		
 		User user = (User) query.uniqueResult();
 		return user;
+	}
+
+	public int getUserCountByDate(Date date) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select count(*) from User where joinDate < :date");
+		query.setParameter("date", date);
+		Long userCount = (Long)query.uniqueResult();
+		
+		return userCount.intValue();
 	}
 
 }

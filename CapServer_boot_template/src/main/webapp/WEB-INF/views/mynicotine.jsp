@@ -11,7 +11,7 @@
 	<div class="container">
 		<h2>Nicotine Amount in Your Body</h2>
 		<p class="lead">체내 니코틴양!</p>
-		<c:set var="a" value="${mynicotine / 16 * 100}" />
+		<c:set var="a" value="${ (mynicotine / 16 ) * 100}" />
 		<div class="progress">
 			<div class="progress-bar progress-bar-striped active"
 				role="progressbar" aria-valuemin="0" aria-valuemax="160"
