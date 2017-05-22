@@ -102,6 +102,16 @@ public class RestAPIController {
 		return new ResponseEntity<Long>(result,HttpStatus.OK);
 	}
 	
+	// ----------------------------- Retrieve TobaccoId By Nickname --------------------------
+	
+	@RequestMapping(value="/tobacco/{username}", method=RequestMethod.GET)
+	public ResponseEntity<Integer> getTobaccoId(@PathVariable("username") String username){
+		User user = userService.getUserByNick(username);
+		Tobacco tobacco = user.getTobac();
+		int result = tobacco.getTobac_id();
+		
+		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+	}
 	
 //	
 //	// ----------------------------- Retrieve Single User --------------------------
